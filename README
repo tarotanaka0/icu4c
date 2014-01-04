@@ -1,0 +1,13 @@
+(mkdir -p icu4c_host && cd icu4c_host/ && ../android/external/icu4c/configure && make)
+
+export SDKROOT=/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.0.sdk
+export ARCH=armv7
+
+(cd android/external/icu4c/ && \
+    CFLAGS="-fPIC -arch ${ARCH} -pipe -isysroot ${SDKROOT} -miphoneos-version-min=7.0" \
+    CXXFLAGS="-fPIC -arch ${ARCH} -pipe -isysroot ${SDKROOT} -miphoneos-version-min=7.0" \
+    CPPFLAGS="-arch ${ARCH} -isysroot ${SDKROOT} -I$(pwd)/tools/tzcode" \
+    ./configure --host=${ARCH}-apple-darwin \
+    --enable-static --disable-shared -with-cross-build=$(pwd)/../../../icu4c_host/ && \
+    make )
+
