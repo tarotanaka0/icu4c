@@ -50,12 +50,16 @@
 #if U_PLATFORM_IS_DARWIN_BASED
 #if defined(__STRICT_ANSI__)
 #define UPRV_REMAP_INLINE
+#if !(5 <= __clang_major__)
 #define inline
+#endif
 #endif
 #include <libkern/OSAtomic.h>
 #define USE_MAC_OS_ATOMIC_INCREMENT 1
 #if defined(UPRV_REMAP_INLINE)
+#if !(5 <= __clang_major__)
 #undef inline
+#endif
 #undef UPRV_REMAP_INLINE
 #endif
 #endif
